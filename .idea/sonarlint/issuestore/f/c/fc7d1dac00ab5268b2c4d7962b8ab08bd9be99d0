@@ -1,0 +1,29 @@
+
+p
+java:S1192’"MDefine a constant instead of duplicating this literal "Roboto Black" 3 times.(ú àñşÿÿÿÿ8Ğ¯”œ„1
+f
+java:S1192~"IDefine a constant instead of duplicating this literal "********" 4 times.(³ï°˜8Ğ¯”œ„1
+w
+java:S1192y"[Define a constant instead of duplicating this literal "Digite seu nome de usuario" 4 times.(µ…¬Z8Ğ¯”œ„1
+i
+java:S1192r"GDefine a constant instead of duplicating this literal "Roboto" 4 times.(¼¹‹äıÿÿÿÿ8Ğ¯”œ„1
+r	java:S117L"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ï½åúÿÿÿÿ8Ğ¯”œ„1
+s	java:S117–"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•ºè½şÿÿÿÿ8Ñ¯”œ„1
+m	java:S117°"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É©át8Ñ¯”œ„1
+J
+java:S1604*"(Make this anonymous inner class a lambda(¤©Òâüÿÿÿÿ8Ñ¯”œ„1
+j
+java:S1223õ"LRename this method to prevent any misunderstanding or make it a constructor.(ÀğŠÕ8Ò¯”œ„1
+A
+java:S1659!"$Declare "yMouse" on a separate line.(³ºÃª8ë¯”œ„1
+R
+java:S1948$"0Make "userController" transient or serializable.(¦à¢Õúÿÿÿÿ8ì¯”œ„1
+k
+java:S3252="IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(Õû»öşÿÿÿÿ8ï¯”œ„1
+k	java:S100õ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀğŠÕ8€°”œ„1
+J
+java:S1128"(Remove this unused import 'dao.UserDAO'.(¸ÅïÄúÿÿÿÿ8ƒ°”œ„1
+P
+java:S1128"4Remove this unused import 'java.security.Principal'.(’ÛŞ[8ƒ°”œ„1
+M
+java:S1128"0Remove this unused import 'java.sql.Connection'.(¥ËôÖ8ƒ°”œ„1

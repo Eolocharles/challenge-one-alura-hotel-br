@@ -1,28 +1,24 @@
 package views;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.SystemColor;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JTextField;
+
 import com.toedter.calendar.JDateChooser;
+import controllers.BookingController;
+import model.Booking;
+
 import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.text.Format;
+import java.sql.Date;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
+import java.util.Calendar;
 import javax.swing.border.LineBorder;
 
 
@@ -38,6 +34,8 @@ public class ReservasView extends JFrame {
 	private JLabel labelExit;
 	private JLabel lblValorSimbolo; 
 	private JLabel labelAtras;
+
+	private BookingController bookingController;
 
 	/**
 	 * Launch the application.
@@ -60,6 +58,7 @@ public class ReservasView extends JFrame {
 	 */
 	public ReservasView() {
 		super("Reserva");
+		bookingController = new BookingController();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ReservasView.class.getResource("/imagenes/aH-40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
@@ -142,6 +141,7 @@ public class ReservasView extends JFrame {
 		txtDataS.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Ativa o evento, após o usuário selecionar as datas, o valor da reserva deve ser calculado
+				calcValueOfBooking(txtDataE, txtDataS);
 			}
 		});
 		txtDataS.setDateFormatString("yyyy-MM-dd");
@@ -173,7 +173,7 @@ public class ReservasView extends JFrame {
 		txtFormaPagamento.setBackground(SystemColor.text);
 		txtFormaPagamento.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
 		txtFormaPagamento.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtFormaPagamento.setModel(new DefaultComboBoxModel(new String[] {"Cartão de Crédito", "Cartão de Débito", "Dinheiro"}));
+		txtFormaPagamento.setModel(new DefaultComboBoxModel(new String[] {"DINHEIRO", "CARTAO", "PIX"}));
 		panel.add(txtFormaPagamento);
 		
 		JLabel lblFormaPago = new JLabel("FORMA DE PAGAMENTO");
@@ -295,9 +295,8 @@ public class ReservasView extends JFrame {
 		btnProximo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (ReservasView.txtDataE.getDate() != null && ReservasView.txtDataS.getDate() != null) {		
-					RegistroHospede registro = new RegistroHospede();
-					registro.setVisible(true);
+				if (ReservasView.txtDataE.getDate() != null && ReservasView.txtDataS.getDate() != null) {
+					saveBooking();
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
 				}
@@ -315,6 +314,42 @@ public class ReservasView extends JFrame {
 		lblSeguinte.setFont(new Font("Roboto", Font.PLAIN, 18));
 		lblSeguinte.setBounds(0, 0, 122, 35);
 		btnProximo.add(lblSeguinte);
+	}
+
+
+
+
+
+	private void saveBooking() {
+		String checkIn = ((JTextField)txtDataE.getDateEditor().getUiComponent()).getText();
+		String checkOut = ((JTextField)txtDataS.getDateEditor().getUiComponent()).getText();
+		Booking booking = new Booking(Date.valueOf(checkIn), Date.valueOf(checkOut), txtValor.getText(),txtFormaPagamento.getSelectedItem().toString());
+		bookingController.save(booking);
+
+		JOptionPane.showMessageDialog(null, "Reserva com id" + booking.getId().toString()+" salva com sucesso.");
+
+		RegistroHospede registro = new RegistroHospede(booking.getId());
+		registro.setVisible(true);
+		dispose();
+	}
+
+	public void calcValueOfBooking(JDateChooser checkIn, JDateChooser checkOut) {
+		if (checkIn.getDate() != null && checkOut.getDate() != null) {
+			Calendar begin = checkIn.getCalendar();
+			Calendar end = checkOut.getCalendar();
+			int days = -1;
+			int dayleValue = 100;
+			int totalValue = 0;
+
+			while (begin.before(end) || begin.equals(end)) {
+				days++;
+				begin.add(Calendar.DAY_OF_MONTH, 1);
+			}
+			totalValue = days * dayleValue;
+			txtValor.setText(String.valueOf(totalValue));
+			lblValorSimbolo.setVisible(true);
+	}
+
 	}
 
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"	

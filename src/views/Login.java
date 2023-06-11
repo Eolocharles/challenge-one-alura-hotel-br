@@ -1,22 +1,25 @@
 package views;
 
-import java.awt.EventQueue;
+import controllers.UserController;
+import dao.UserDAO;
+import model.User;
+
+import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
-import java.awt.SystemColor;
-import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.security.Principal;
+import java.sql.Connection;
 
 public class Login extends JFrame {
 
@@ -29,6 +32,8 @@ public class Login extends JFrame {
 	private JPasswordField txtSenha;
 	int xMouse, yMouse;
 	private JLabel labelExit;
+
+	private UserController userController;
 
 	/**
 	 * Launch the application.
@@ -50,6 +55,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		userController = new UserController();
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -233,21 +239,31 @@ public class Login extends JFrame {
 		panel.add(header);
 		header.setLayout(null);
 	}
+
+
 	
 	private void Login() {
-		 String Usuario= "admin";
-	     String Senha="admin";
+		String login = txtUsuario.getText();
+		String senha = String.valueOf(txtSenha.getPassword());
 
-	        String senhaa=new String (txtSenha.getPassword());
+		if (login.equals("Digite seu nome de usuario") || senha.equals("********")) {
+			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+		}else {
+			User user = new User();
+			user.setLogin(login);
+			user.setPassword(senha);
 
-	        if(txtUsuario.getText().equals(Usuario) && senhaa.equals(Senha)){
-	            MenuUsuario menu = new MenuUsuario();
-	            menu.setVisible(true);
-	            dispose();	 
-	        }else {
-	            JOptionPane.showMessageDialog(this, "Usuario ou Senha não válidos");
-	        }
-	} 
+
+
+			if (userController.login(user.getLogin(), user.getPassword())) {
+				MenuUsuario menu = new MenuUsuario();
+				menu.setVisible(true);
+				dispose();
+			}else {
+				JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos");
+			}
+		}
+	}
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
