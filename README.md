@@ -31,17 +31,12 @@
 - setResizable(false): determina o tamanho da janela, e através do parâmetro <strong>false</strong>, a tela não poderá ser maximizada;
 - setLocationRelativeTo(null): determina a localização da janela, e através do parâmetro <strong>null</strong> ele a mantém centralizada na tela.
 
-#### Para este desafio, concentre-se na parte lógica e de conexão com o Banco de Dados, após concluir o desafio, sinta-se a vontade para incluir novas funcionalidades e modificar a interface gráfica. 
+
 
 
 ---
 
 
-## 🔍 Analisando nosso repositório!
-
-### Este é o repositório base do nosso projeto, nele você encontrará:
-#### 🔹 src/views: pasta com toda a interface gráfica das telas necessárias para desenvolver o programa;
-#### 🔹 src/imagens: pasta com imagens que você pode utilizar em seu projeto. Sinta-se a vontade para utilizar outras, caso deseje.
 </br>
 
 ## ⬇️ Download
